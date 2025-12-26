@@ -24,7 +24,7 @@ export default function DockNav() {
 
     const observerOptions = {
       root: null,
-      rootMargin: "-40% 0px -40% 0px", // Trigger when element is near center of viewport
+      rootMargin: "-25% 0px -25% 0px", // Trigger when element intersects the middle 50% of the viewport
       threshold: 0
     };
 
@@ -126,7 +126,7 @@ function DockIcon({
   });
 
   const widthSync = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 });
+  const width = useSpring(widthSync, { mass: 0.5, stiffness: 150, damping: 15 });
 
 
 

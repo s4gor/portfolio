@@ -95,7 +95,7 @@ export default async function Home() {
           <Avatar />
           <div className="flex flex-col">
             <h1 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl min-h-[48px]">
-              <Typewriter text={['Emran Hossain Sagor', 's4gor']} />
+              <Typewriter text={['Emran Sagor', 's4gor']} />
             </h1>
             <p className="text-neutral-500 font-medium lg:mt-2">Software Developer</p>
           </div>
