@@ -16,6 +16,23 @@ import PinnedRepo from "@/components/pinned-repo";
 import GitHubActivity from "@/components/github-activity";
 
 
+interface BlogPost {
+  id: number;
+  date: string;
+  link: string;
+  title: {
+    rendered: string;
+  };
+  excerpt: {
+    rendered: string;
+  };
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{
+      source_url: string;
+    }>;
+  };
+}
+
 async function getRepoStats(owner: string, repo: string) {
   try {
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
@@ -23,19 +40,19 @@ async function getRepoStats(owner: string, repo: string) {
     });
     if (!res.ok) return { stargazers_count: 0, forks_count: 0 };
     return await res.json();
-  } catch (error) {
+  } catch {
     return { stargazers_count: 0, forks_count: 0 };
   }
 }
 
-async function getBlogPosts() {
+async function getBlogPosts(): Promise<BlogPost[]> {
   try {
     const res = await fetch('https://jstales.com/wp-json/wp/v2/posts?per_page=3&_embed', {
       next: { revalidate: 3600 }
     });
     if (!res.ok) return [];
     return await res.json();
-  } catch (error) {
+  } catch {
     return [];
   }
 }
@@ -80,7 +97,7 @@ export default async function Home() {
             <h1 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl min-h-[48px]">
               <Typewriter text={['Emran Hossain Sagor', 's4gor']} />
             </h1>
-            <p className="text-neutral-500 font-medium">Software Developer</p>
+            <p className="text-neutral-500 font-medium lg:mt-2">Software Developer</p>
           </div>
         </div>
 
@@ -347,7 +364,7 @@ export default async function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {posts.map((post: any) => (
+          {posts.map((post: BlogPost) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
@@ -368,7 +385,7 @@ export default async function Home() {
 function SocialLink({ href, icon, label }: { href: string, icon: React.ReactNode, label: string }) {
   return (
     <Link href={href} target="_blank" rel="noopener noreferrer"
-      className="group flex items-center gap-2 px-4 py-2 bg-neutral-50 hover:bg-white border border-neutral-100 rounded-full transition-all duration-200 hover:shadow-sm hover:border-neutral-200">
+      className="group flex items-center gap-2 px-4 py-2 bg-neutral-50 hover:bg-white border border-neutral-100 rounded-full transition-all duration-200 shadow-sm hover:shadow-md hover:border-neutral-200">
       <span className="text-lg transition-colors">
         {icon}
       </span>
@@ -407,7 +424,7 @@ function TechCategory({ title, children }: { title: string, children: React.Reac
 function TechItem({ href, icon, name, desc }: { href: string, icon: React.ReactNode, name: string, desc: string }) {
   return (
     <Link href={href} target="_blank" rel="noopener noreferrer"
-      className='group flex items-center gap-3 p-2 sm:p-3 rounded-xl border border-neutral-100 bg-white hover:border-neutral-200 hover:shadow-sm transition-all'>
+      className='group flex items-center gap-3 p-2 sm:p-3 rounded-xl border border-neutral-100 bg-white shadow-sm hover:border-neutral-200 hover:shadow-md transition-all'>
       <div className="relative flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 shrink-0 overflow-hidden rounded-lg bg-neutral-50 border border-neutral-100 text-lg sm:text-xl">
         {icon}
       </div>
@@ -428,7 +445,7 @@ function ProjectCard({ href, src, alt, title, meta }: {
 }) {
   return (
     <Link href={href} target="_blank" rel="noopener noreferrer"
-      className="group flex flex-col bg-white rounded-2xl border border-neutral-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-neutral-200">
+      className="group flex flex-col bg-white rounded-2xl border border-neutral-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-neutral-200">
       <div className="relative aspect-video w-full overflow-hidden bg-neutral-100 border-b border-neutral-100">
         <Image
           src={src}
@@ -457,7 +474,7 @@ function ProjectCard({ href, src, alt, title, meta }: {
   )
 }
 
-function BlogCard({ post }: { post: any }) {
+function BlogCard({ post }: { post: BlogPost }) {
   const date = new Date(post.date).toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -468,7 +485,7 @@ function BlogCard({ post }: { post: any }) {
 
   return (
     <Link href={post.link} target="_blank" rel="noopener noreferrer"
-      className="group flex flex-col bg-white rounded-2xl border border-neutral-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-neutral-200 h-full">
+      className="group flex flex-col bg-white rounded-2xl border border-neutral-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-neutral-200 h-full">
       {featuredMedia && (
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100 border-b border-neutral-100">
           <Image
@@ -512,7 +529,7 @@ function OssCard({ href, icon, title, type, stats, desc }: {
 }) {
   return (
     <Link href={href} target="_blank" rel="noopener noreferrer"
-      className="group relative flex flex-col gap-4 sm:gap-6 p-5 sm:p-8 bg-white rounded-2xl border border-neutral-100 hover:border-neutral-200 hover:shadow-md transition-all duration-300 h-full">
+      className="group relative flex flex-col gap-4 sm:gap-6 p-5 sm:p-8 bg-white rounded-2xl border border-neutral-100 shadow-sm hover:border-neutral-200 hover:shadow-md transition-all duration-300 h-full">
 
       <div className="flex items-start justify-between">
         <div className="text-3xl sm:text-4xl shrink-0 p-2.5 sm:p-3 bg-neutral-50 rounded-xl border border-neutral-100 shadow-sm group-hover:scale-110 transition-transform duration-300">

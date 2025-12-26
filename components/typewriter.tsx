@@ -19,37 +19,37 @@ export default function Typewriter({
   const [delta, setDelta] = useState(typingSpeed);
 
   useEffect(() => {
-    let ticker = setInterval(() => {
+    const tick = () => {
+      const i = loopNum % text.length;
+      const fullText = text[i];
+      const updatedText = isDeleting
+        ? fullText.substring(0, displayText.length - 1)
+        : fullText.substring(0, displayText.length + 1);
+
+      setDisplayText(updatedText);
+
+      if (isDeleting) {
+        setDelta(deletingSpeed);
+      }
+
+      if (!isDeleting && updatedText === fullText) {
+        setIsDeleting(true);
+        setDelta(pauseTime);
+      } else if (isDeleting && updatedText === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+        setDelta(typingSpeed);
+      } else if (!isDeleting && updatedText !== fullText) {
+        setDelta(typingSpeed);
+      }
+    };
+
+    const ticker = setTimeout(() => {
       tick();
     }, delta);
 
-    return () => clearInterval(ticker);
-  }, [displayText, isDeleting, loopNum, delta]);
-
-  const tick = () => {
-    let i = loopNum % text.length;
-    let fullText = text[i];
-    let updatedText = isDeleting
-      ? fullText.substring(0, displayText.length - 1)
-      : fullText.substring(0, displayText.length + 1);
-
-    setDisplayText(updatedText);
-
-    if (isDeleting) {
-      setDelta(deletingSpeed);
-    }
-
-    if (!isDeleting && updatedText === fullText) {
-      setIsDeleting(true);
-      setDelta(pauseTime);
-    } else if (isDeleting && updatedText === '') {
-      setIsDeleting(false);
-      setLoopNum(loopNum + 1);
-      setDelta(typingSpeed);
-    } else if (!isDeleting && updatedText !== fullText) {
-      setDelta(typingSpeed);
-    }
-  };
+    return () => clearTimeout(ticker);
+  }, [displayText, isDeleting, loopNum, delta, text, typingSpeed, deletingSpeed, pauseTime]);
 
   return (
     <span>

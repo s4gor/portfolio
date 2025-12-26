@@ -1,32 +1,19 @@
 "use client";
 
 import React from 'react';
-
 import GitHubCalendar from 'react-github-calendar';
-import { useTheme } from 'next-themes';
 import { Tooltip } from 'react-tooltip';
 
-const selectLast6Months = (contributions: any[]) => {
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
-  const shownMonths = 6;
-
-  return contributions.filter((activity) => {
-    const date = new Date(activity.date);
-    const monthOfDay = date.getMonth();
-
-    return (
-      date.getFullYear() === currentYear &&
-      monthOfDay > currentMonth - shownMonths &&
-      monthOfDay <= currentMonth
-    );
-  });
-};
+interface Activity {
+  date: string;
+  count: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
 
 // Filter for April 1, 2025 onwards
-const selectApril2025Onwards = (contributions: any[]) => {
+const selectApril2025Onwards = (contributions: Activity[]) => {
   const startDate = new Date('2025-04-01');
-  return contributions.filter((activity: any) => {
+  return contributions.filter((activity: Activity) => {
     const date = new Date(activity.date);
     return date >= startDate;
   });
@@ -47,7 +34,7 @@ export default function GitHubActivity() {
   return (
     <div className="flex flex-col md:flex-row gap-8">
       {/* Calendar Section */}
-      <div className="flex-grow border rounded-xl p-6 bg-white shadow-sm border-neutral-100 overflow-hidden hover:shadow-md transition-shadow duration-200">
+      <div className="flex-grow border rounded-xl p-6 bg-white shadow-sm border-neutral-100 overflow-hidden hover:border-neutral-200 hover:shadow-md transition-all duration-200">
         <GitHubCalendar
           username="s4gor"
           colorScheme="light"
@@ -57,8 +44,8 @@ export default function GitHubActivity() {
           blockSize={12}
           blockMargin={4}
           renderBlock={(block, activity) => (
-            // @ts-ignore
-            React.cloneElement(block, {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            React.cloneElement(block as React.ReactElement<any>, {
               'data-tooltip-id': 'react-tooltip',
               'data-tooltip-html': `${activity.count} contributions on ${activity.date}`,
               style: { borderRadius: '50%' } // Make it circular
