@@ -10,6 +10,7 @@ export default function DockNav() {
   const mouseX = useMotionValue(Infinity);
   const isTouchInputRef = useRef(false);
   const [currentHash, setCurrentHash] = React.useState("#home");
+  const [isTouch, setIsTouch] = React.useState(false);
 
   React.useEffect(() => {
     const sections = ["home", "oss", "projects", "about", "blog"];
@@ -44,54 +45,68 @@ export default function DockNav() {
     mouseX.set(Infinity);
   };
 
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    mouseX.set(Infinity);
+    const touch = e.changedTouches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const link = element?.closest('a');
+    if (link instanceof HTMLElement) {
+      link.click();
+    }
+  };
+
   return (
     <div className="sticky top-0 z-50 flex justify-center pt-6 pb-4 w-full overflow-x-auto no-scrollbar pointer-events-none">
       <motion.div
         onMouseMove={(e) => {
           if (!isTouchInputRef.current) {
             mouseX.set(e.clientX);
+            setIsTouch(false);
           }
         }}
         onMouseLeave={() => {
           if (!isTouchInputRef.current) {
             mouseX.set(Infinity);
+            setIsTouch(false);
           }
         }}
         onTouchStart={(e) => {
           isTouchInputRef.current = true;
+          setIsTouch(true);
           mouseX.set(e.touches[0].clientX);
         }}
         onTouchMove={(e) => {
           isTouchInputRef.current = true;
+          setIsTouch(true);
           mouseX.set(e.touches[0].clientX);
         }}
-        onTouchEnd={() => mouseX.set(Infinity)}
+        onTouchEnd={handleTouchEnd}
         onTouchCancel={() => mouseX.set(Infinity)}
         className="mx-auto flex h-14 sm:h-16 items-end gap-2 sm:gap-4 rounded-2xl border border-neutral-100 bg-white px-2 sm:px-4 pb-2 sm:pb-3 shadow-xl pointer-events-auto"
       >
-        <DockIcon mouseX={mouseX} href="#home" label="Home" isActive={currentHash === "#home"} onClick={() => handleLinkClick("#home")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#home" label="Home" isActive={currentHash === "#home"} onClick={() => handleLinkClick("#home")}>
           <Home className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} href="#oss" label="Open Source" isActive={currentHash === "#oss"} onClick={() => handleLinkClick("#oss")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#oss" label="Open Source" isActive={currentHash === "#oss"} onClick={() => handleLinkClick("#oss")}>
           <Terminal className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} href="#projects" label="Projects" isActive={currentHash === "#projects"} onClick={() => handleLinkClick("#projects")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#projects" label="Projects" isActive={currentHash === "#projects"} onClick={() => handleLinkClick("#projects")}>
           <FolderOpen className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} href="#about" label="About" isActive={currentHash === "#about"} onClick={() => handleLinkClick("#about")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#about" label="About" isActive={currentHash === "#about"} onClick={() => handleLinkClick("#about")}>
           <User className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} href="#blog" label="Blog" isActive={currentHash === "#blog"} onClick={() => handleLinkClick("#blog")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#blog" label="Blog" isActive={currentHash === "#blog"} onClick={() => handleLinkClick("#blog")}>
           <BookOpen className="size-5" />
         </DockIcon>
 
         <div className="h-8 w-[1px] bg-neutral-200 self-center mx-2" />
 
-        <DockIcon mouseX={mouseX} href="https://github.com/s4gor/portfolio" label="Source Code" external onClick={() => mouseX.set(Infinity)}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="https://github.com/s4gor/portfolio" label="Source Code" external onClick={() => mouseX.set(Infinity)}>
           <CodeXml className="size-5" />
         </DockIcon>
 
-        <DockIcon mouseX={mouseX} href="mailto:emran@exeebit.com" label="Hire Me" external onClick={() => mouseX.set(Infinity)}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="mailto:emran@exeebit.com" label="Hire Me" external onClick={() => mouseX.set(Infinity)}>
           <div className="size-5 flex items-center justify-center">
             <div className="size-2.5 rounded-full bg-emerald-500 animate-pulse" />
           </div>
@@ -108,6 +123,7 @@ function DockIcon({
   label,
   external = false,
   isActive = false,
+  isTouch = false,
   onClick,
 }: {
   mouseX: MotionValue;
@@ -116,6 +132,7 @@ function DockIcon({
   label: string;
   external?: boolean;
   isActive?: boolean;
+  isTouch?: boolean;
   onClick?: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -126,9 +143,14 @@ function DockIcon({
   });
 
   const widthSync = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  const width = useSpring(widthSync, { mass: 0.5, stiffness: 150, damping: 15 });
 
-
+  // Dynamic spring config based on input method
+  // Desktop: Snappy and fast
+  // Mobile: Slow and deliberate
+  const width = useSpring(widthSync, isTouch
+    ? { mass: 0.5, stiffness: 60, damping: 20 }
+    : { mass: 0.1, stiffness: 150, damping: 12 }
+  );
 
   const content = (
     <motion.div

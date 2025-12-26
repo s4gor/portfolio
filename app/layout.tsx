@@ -60,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <GoogleAnalytics gaId="G-Z5SNRX21W1" />
       <Analytics />
       <body className={`${geistSans.className} antialiased`}>
