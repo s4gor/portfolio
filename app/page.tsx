@@ -94,7 +94,7 @@ export default async function Home() {
         <div className="flex items-center gap-4">
           <Avatar />
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl min-h-[48px]">
+            <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl min-h-[48px]">
               <Typewriter text={['Emran Sagor', 's4gor']} />
             </h1>
             <p className="text-neutral-500 font-medium lg:mt-2">Software Developer</p>
@@ -147,7 +147,7 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col gap-4 lg:mt-6 mt-3">
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-900">Contribution Timeline</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">Contribution Timeline</h2>
           <GitHubActivity />
         </div>
       </section>
@@ -155,7 +155,7 @@ export default async function Home() {
       {/* OSS Section */}
       <section id="oss" className="flex flex-col gap-12 scroll-mt-24 pt-14">
         <div className="flex flex-col gap-6">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
             Open Source Software
           </h2>
           <div className="prose prose-neutral max-w-none">
@@ -224,7 +224,7 @@ export default async function Home() {
       {/* Projects Section */}
       <section id="projects" className="flex flex-col gap-8 scroll-mt-24 pt-14">
         <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
             Projects
           </h2>
           <p className="text-lg text-neutral-500">
@@ -270,7 +270,7 @@ export default async function Home() {
       {/* About Section */}
       <section id="about" className='flex flex-col gap-16 scroll-mt-24 pt-14'>
         <div className='flex flex-col gap-8'>
-          <h2 className='text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl'>
+          <h2 className='text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl'>
             About Me
           </h2>
 
@@ -309,7 +309,7 @@ export default async function Home() {
         </div>
 
         <div className='flex flex-col gap-8'>
-          <h2 className='text-3xl font-bold tracking-tight text-neutral-900'>Tech Stack</h2>
+          <h2 className='text-3xl font-semibold tracking-tight text-neutral-900'>Tech Stack</h2>
 
           <div className='grid gap-8'>
             <TechCategory title="Languages">
@@ -355,7 +355,7 @@ export default async function Home() {
       {/* Blog Section */}
       <section id="blog" className="flex flex-col gap-8 scroll-mt-24 pt-14">
         <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
             Latest Articles
           </h2>
           <p className="text-lg text-neutral-500">
@@ -457,7 +457,7 @@ function ProjectCard({ href, src, alt, title, meta }: {
       </div>
 
       <div className="flex flex-col p-5 gap-4">
-        <h2 className="text-xl font-bold text-neutral-900 group-hover:text-sky-600 transition-colors">
+        <h2 className="text-xl font-semibold text-neutral-900 group-hover:text-sky-600 transition-colors">
           {title}
         </h2>
 
@@ -502,7 +502,7 @@ function BlogCard({ post }: { post: BlogPost }) {
         <div className="text-xs font-medium text-neutral-500">{date}</div>
 
         <h3
-          className="text-lg font-bold text-neutral-900 group-hover:text-sky-600 transition-colors line-clamp-2"
+          className="text-lg font-semibold text-neutral-900 group-hover:text-sky-600 transition-colors line-clamp-2"
           dangerouslySetInnerHTML={{ __html: post.title.rendered }}
         />
 
@@ -540,7 +540,7 @@ function OssCard({ href, icon, title, type, stats, desc }: {
 
       <div className="flex flex-col gap-2 sm:gap-3 grow">
         <div className="flex flex-col gap-1">
-          <h2 className="text-lg sm:text-xl font-bold text-neutral-900 group-hover:text-sky-600 transition-colors">
+          <h2 className="text-lg sm:text-xl font-semibold text-neutral-900 group-hover:text-sky-600 transition-colors">
             {title}
           </h2>
           <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">

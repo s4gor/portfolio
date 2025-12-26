@@ -1,14 +1,14 @@
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import DockNav from "@/components/dock-nav";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import ConsoleEasterEgg from "@/components/console-easter-egg";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
@@ -63,7 +63,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <GoogleAnalytics gaId="G-Z5SNRX21W1" />
       <Analytics />
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${outfit.className} antialiased`}>
         <ConsoleEasterEgg />
         <DockNav />
         <div className="flex justify-center mb-10">
