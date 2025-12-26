@@ -1,6 +1,6 @@
 # Minimalist Developer Portfolio
 
-A clean, high-performance single-page portfolio template built with **Next.js 16**, **Tailwind CSS v4**, and **Framer Motion**.
+A clean, high-performance single-page portfolio template built with **Next.js 15**, **Tailwind CSS v4**, and **Framer Motion**.
 
 Featuring a macOS-style dock navigation, custom GitHub contribution timeline, and a blog integration.
 
@@ -8,7 +8,8 @@ Featuring a macOS-style dock navigation, custom GitHub contribution timeline, an
 
 -   **Single Page Architecture**: Smooth scrolling navigation between sections.
 -   **Dock Navigation**: Interactive, macOS-inspired floating dock with magnification effects.
--   **Custom GitHub Timeline**: A branded, dot-matrix visualization of your contribution history (filtered by date).
+-   **Custom GitHub Timeline**: A branded, dot-matrix visualization of your contribution history with career milestones.
+-   **Consistent Design**: Standardized card borders, shadows, and hover effects across the entire app.
 -   **Blog Integration**: Fetches latest posts from a WordPress/Headless CMS endpoint.
 -   **Modern Stack**: Built on the bleeding edge with Next.js 15+ and Tailwind v4.
 -   **Fully Responsive**: optimized for mobile, tablet, and desktop.
@@ -16,7 +17,7 @@ Featuring a macOS-style dock navigation, custom GitHub contribution timeline, an
 
 ## 🛠️ Tech Stack
 
--   **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
+-   **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
 -   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 -   **Animations**: [Framer Motion](https://www.framer.com/motion/)
 -   **Icons**: [React Icons](https://react-icons.github.io/react-icons/) & [Lucide React](https://lucide.dev/)
