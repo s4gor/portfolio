@@ -250,8 +250,8 @@ export default async function Home() {
             alt="RC Lawn Care & Landscaping, LLC"
             title="RC Lawn Care & Landscaping"
             meta={[
-              { label: "Stack", value: "WordPress" },
-              { label: "Integration", value: "Custom Authorize.net, Career Portal" }
+              { label: "Stack", value: "PHP · WordPress (Custom Build)" },
+              { label: "Integration", value: "Customized Authorize.net Integration, Career Portal" }
             ]}
           />
           <ProjectCard
@@ -260,8 +260,8 @@ export default async function Home() {
             alt="Party Gear"
             title="Party Gear"
             meta={[
-              { label: "Stack", value: "WordPress, Custom PHP" },
-              { label: "Key Features", value: "Booking System, PayPal Integration" }
+              { label: "Stack", value: "PHP · WordPress (Custom Build)" },
+              { label: "Key Features", value: "Booking & Invoicing Software (Laravel), PayPal Integration" }
             ]}
           />
         </div>
