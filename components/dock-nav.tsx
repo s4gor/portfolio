@@ -145,10 +145,10 @@ function DockIcon({
   const widthSync = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
 
   // Dynamic spring config based on input method
-  // Desktop: Snappy and fast
-  // Mobile: Slow and deliberate
+  // Desktop: Snappy and fast (~0.2s)
+  // Mobile: Smooth but quick (~0.3s)
   const width = useSpring(widthSync, isTouch
-    ? { mass: 0.5, stiffness: 60, damping: 20 }
+    ? { mass: 0.2, stiffness: 120, damping: 15 }
     : { mass: 0.1, stiffness: 150, damping: 12 }
   );
 
