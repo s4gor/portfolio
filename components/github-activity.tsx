@@ -1,14 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import GitHubCalendar from 'react-github-calendar';
+import { ActivityCalendar, Activity } from 'react-activity-calendar';
 import { Tooltip } from 'react-tooltip';
-
-interface Activity {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
-}
 
 interface Language {
   name: string;
@@ -75,17 +69,15 @@ export default function GitHubActivity() {
             <div className="text-red-500">{error}</div>
           ) : contributions ? (
             <>
-              {/* @ts-ignore - data prop is supported but not in type definitions */}
-              <GitHubCalendar
-                username="s4gor"
-                colorScheme="light"
-                loading={false}
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              <ActivityCalendar
                 data={selectApril2025Onwards(contributions)}
+                colorScheme="light"
                 theme={customTheme}
                 fontSize={12}
                 blockSize={12}
                 blockMargin={4}
-                renderBlock={(block, activity) => (
+                renderBlock={(block: React.ReactElement, activity: Activity) => (
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   React.cloneElement(block as React.ReactElement<any>, {
                     'data-tooltip-id': 'react-tooltip',

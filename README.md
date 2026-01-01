@@ -70,6 +70,30 @@ Open `components/github-activity.tsx` to:
 ### 3. Blog Source
 The blog currently fetches from a WordPress JSON API. To use your own source, update the `getBlogPosts` function in `app/page.tsx`.
 
+### 4. GitHub Token Setup
+To fetch contribution data, you need a GitHub Personal Access Token.
+
+1.  **Generate a Token**:
+    -   Go to [GitHub Developer Settings > Personal Access Tokens > Tokens (classic)](https://github.com/settings/tokens).
+    -   Click **Generate new token (classic)**.
+    -   Select the `read:user` and `read:org` scopes.
+    -   Generate and copy the token.
+
+2.  **Local Development**:
+    -   Create a `.env.local` file in the root directory.
+    -   Add your token:
+        ```env
+        GITHUB_TOKEN=your_github_token_here
+        ```
+
+3.  **Vercel Deployment**:
+    -   Go to your Vercel Project Dashboard.
+    -   Navigate to **Settings > Environment Variables**.
+    -   Add a new variable:
+        -   **Key**: `GITHUB_TOKEN`
+        -   **Value**: Your generated token.
+    -   Save and redeploy.
+
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).

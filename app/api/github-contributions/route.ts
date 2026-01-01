@@ -90,8 +90,8 @@ export async function GET() {
 
     // Transform the data to match react-github-calendar format
     const contributions = data.data.user.contributionsCollection.contributionCalendar.weeks
-      .flatMap((week: any) => week.contributionDays)
-      .map((day: any) => ({
+      .flatMap((week: { contributionDays: unknown[] }) => week.contributionDays)
+      .map((day: { date: string; contributionCount: number }) => ({
         date: day.date,
         count: day.contributionCount,
         level: getContributionLevel(day.contributionCount)
@@ -100,8 +100,8 @@ export async function GET() {
     // Process language statistics
     const languageMap = new Map<string, { name: string; size: number; color: string }>();
 
-    data.data.user.repositories.nodes.forEach((repo: any) => {
-      repo.languages.edges.forEach((edge: any) => {
+    data.data.user.repositories.nodes.forEach((repo: { languages: { edges: { size: number; node: { name: string; color: string } }[] } }) => {
+      repo.languages.edges.forEach((edge: { size: number; node: { name: string; color: string } }) => {
         const { name, color } = edge.node;
         const existing = languageMap.get(name);
         if (existing) {
