@@ -184,6 +184,13 @@ export default async function Home() {
             desc="A lightweight, durable execution engine for Go that allows workflows to survive crashes and restarts by replaying history."
           />
           <OssCard
+            href="https://crates.io/crates/schema-sync"
+            icon={<SiRust className="text-[#000000]" />}
+            title="schema-sync"
+            type="Rust Package"
+            desc="Production-grade schema synchronization for multi-tenant databases in Rust."
+          />
+          <OssCard
             href="https://chromewebstore.google.com/detail/history-data-manager/ojfodlmekhaaekmgondhfaonpigdfjik"
             icon={<SiGooglechrome className="text-[#4285F4]" />}
             title="History & Data Manager"
