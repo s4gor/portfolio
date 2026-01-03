@@ -10,9 +10,9 @@ interface Language {
   percentage: number;
 }
 
-// Filter for April 1, 2025 onwards (from 2025 data)
-const selectApril2025Onwards = (contributions: Activity[]) => {
-  const startDate = new Date('2025-04-01');
+// Filter for 2026
+const select2026 = (contributions: Activity[]) => {
+  const startDate = new Date('2026-01-01');
   return contributions.filter((activity: Activity) => {
     const date = new Date(activity.date);
     return date >= startDate;
@@ -68,32 +68,39 @@ export default function GitHubActivity() {
           ) : error ? (
             <div className="text-red-500">{error}</div>
           ) : contributions ? (
-            <>
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <ActivityCalendar
-                data={selectApril2025Onwards(contributions)}
-                colorScheme="light"
-                theme={customTheme}
-                fontSize={12}
-                blockSize={12}
-                blockMargin={4}
-                renderBlock={(block: React.ReactElement, activity: Activity) => (
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  React.cloneElement(block as React.ReactElement<any>, {
-                    'data-tooltip-id': 'react-tooltip',
-                    'data-tooltip-html': `${activity.count} contributions on ${activity.date}`,
-                    style: { borderRadius: '50%' }
-                  })
-                )}
-              />
-              <Tooltip id="react-tooltip" style={{ fontSize: '12px' }} delayShow={50} />
-            </>
+            (() => {
+              const data = select2026(contributions);
+              return data.length === 0 ? (
+                <div className="text-neutral-500">No activity data available for 2026 yet.</div>
+              ) : (
+                <>
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  <ActivityCalendar
+                    data={data}
+                    colorScheme="light"
+                    theme={customTheme}
+                    fontSize={12}
+                    blockSize={12}
+                    blockMargin={4}
+                    renderBlock={(block: React.ReactElement, activity: Activity) => (
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      React.cloneElement(block as React.ReactElement<any>, {
+                        'data-tooltip-id': 'react-tooltip',
+                        'data-tooltip-html': `${activity.count} contributions on ${activity.date}`,
+                        style: { borderRadius: '50%' }
+                      })
+                    )}
+                  />
+                  <Tooltip id="react-tooltip" style={{ fontSize: '12px' }} delayShow={50} />
+                </>
+              );
+            })()
           ) : null}
         </div>
 
         {/* Timeline Milestones - ORIGINAL CODE */}
         <div className="md:w-64 flex flex-col gap-4 shrink-0">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">2025 Milestones</h3>
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500">Milestones</h3>
           <div className="flex flex-col gap-3 relative border-l border-neutral-200 ml-2">
             {milestones.map((item, index) => (
               <div key={index} className="pl-4 relative">
@@ -138,7 +145,9 @@ export default function GitHubActivity() {
               </div>
             ))}
           </div>
-        ) : null}
+        ) : (
+          <div className="text-neutral-500 text-sm">No language data available.</div>
+        )}
       </div>
     </div>
   );

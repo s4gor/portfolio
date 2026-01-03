@@ -10,11 +10,10 @@ export async function GET() {
     );
   }
 
-  // Get contributions for 2025 (January 1, 2025 to December 31, 2025 or now if still in 2025)
-  const now = new Date();
-  const year = 2025; // Explicitly set to 2025
-  const from = new Date(year, 0, 1); // January 1, 2025
-  const to = now.getFullYear() === year ? now : new Date(year, 11, 31); // Dec 31, 2025 or now
+  // Get contributions for 2026 (January 1, 2026 to December 31, 2026)
+  const year = 2026;
+  const from = new Date(year, 0, 1); // January 1, 2026
+  const to = new Date(year, 11, 31); // December 31, 2026
 
   // This query fetches ALL contributions including:
   // - Public repository contributions
@@ -39,7 +38,7 @@ export async function GET() {
             }
           }
         }
-        repositories(first: 100, ownerAffiliations: OWNER, orderBy: {field: UPDATED_AT, direction: DESC}) {
+        repositories(first: 100, ownerAffiliations: [OWNER, ORGANIZATION_MEMBER, COLLABORATOR], orderBy: {field: UPDATED_AT, direction: DESC}) {
           nodes {
             languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
               edges {
@@ -71,7 +70,7 @@ export async function GET() {
           to: to.toISOString()
         }
       }),
-      next: { revalidate: 3600 } // Cache for 1 hour
+      next: { revalidate: 7200 } // No cache for now to ensure 2026 data is fetched
     });
 
     if (!response.ok) {
