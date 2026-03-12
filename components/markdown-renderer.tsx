@@ -17,7 +17,8 @@ export default function MarkdownRenderer({ content }: { content: string }) {
     <div className="prose prose-neutral prose-lg md:prose-xl max-w-none prose-headings:font-semibold prose-a:text-sky-600 hover:prose-a:text-sky-700 leading-relaxed text-[15px] sm:text-base">
       <ReactMarkdown
         components={{
-          code({ node, inline, className, children, ...props }: any) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          code({ inline, className, children, ...props }: any) {
             const match = /language-(\w+)/.exec(className || "");
             return !inline && match ? (
               <div className="my-8 rounded-xl overflow-hidden bg-[#1e1e1e] shadow-2xl ring-1 ring-white/10">

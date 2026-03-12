@@ -74,7 +74,6 @@ export default function GitHubActivity() {
                 <div className="text-neutral-500">No activity data available for 2026 yet.</div>
               ) : (
                 <>
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   <ActivityCalendar
                     data={data}
                     colorScheme="light"
