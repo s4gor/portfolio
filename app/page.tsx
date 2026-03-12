@@ -1,6 +1,7 @@
 import Avatar from "@/components/avatar";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 import {
   SiGithub, SiLinkedin, SiX, SiStackoverflow,
@@ -16,22 +17,7 @@ import PinnedRepo from "@/components/pinned-repo";
 import GitHubActivity from "@/components/github-activity";
 
 
-interface BlogPost {
-  id: number;
-  date: string;
-  link: string;
-  title: {
-    rendered: string;
-  };
-  excerpt: {
-    rendered: string;
-  };
-  _embedded?: {
-    'wp:featuredmedia'?: Array<{
-      source_url: string;
-    }>;
-  };
-}
+import { getBlogPosts, BlogPostData } from "@/lib/blog";
 
 async function getRepoStats(owner: string, repo: string) {
   try {
@@ -45,24 +31,11 @@ async function getRepoStats(owner: string, repo: string) {
   }
 }
 
-async function getBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const res = await fetch('https://jstales.com/wp-json/wp/v2/posts?per_page=3&_embed', {
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
-  } catch {
-    return [];
-  }
-}
-
 export default async function Home() {
-  const [relyStats, pyDataCloakStats, posts] = await Promise.all([
-    getRepoStats('exeebit', 'rely'),
-    getRepoStats('s4gor', 'py-data-cloak'),
-    getBlogPosts()
-  ]);
+  const relyStats = await getRepoStats('exeebit', 'rely');
+  const pyDataCloakStats = await getRepoStats('s4gor', 'py-data-cloak');
+  const allPosts = getBlogPosts();
+  const posts = allPosts.slice(0, 3); // Get latest 3 posts
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -228,11 +201,168 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="flex flex-col gap-8 scroll-mt-24 pt-14">
+      {/* Featured Work Section */}
+      <section id="projects" className="flex flex-col gap-10 scroll-mt-24 pt-14">
         <div className="flex flex-col gap-4">
           <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
-            Projects
+            Featured Work
+          </h2>
+          <p className="text-lg text-neutral-500 max-w-2xl">
+            SaaS products I&apos;ve architected and shipped end-to-end — from concept to production.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-10">
+          {/* Mimonous */}
+          <div className="group relative rounded-3xl overflow-hidden border border-neutral-200 bg-gradient-to-br from-violet-50/60 via-white to-sky-50/40 shadow-sm hover:shadow-xl transition-all duration-500">
+            <div className="grid md:grid-cols-[1.1fr_1fr] gap-0">
+              {/* Browser Mockup + metrics below */}
+              <div className="relative p-4 md:p-6 flex flex-col gap-3">
+                <div className="rounded-xl overflow-hidden shadow-2xl ring-1 ring-black/10">
+                  <div className="flex items-center gap-2 px-3 py-2.5 bg-neutral-800 border-b border-white/5">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                      <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                    </div>
+                    <div className="flex-1 mx-3">
+                      <div className="bg-neutral-700 rounded-md px-3 py-1 text-xs text-neutral-400 font-mono">mimonous.com</div>
+                    </div>
+                  </div>
+                  <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100">
+                    <Image src="/mimonous.png" alt="Mimonous — Invoicing SaaS" fill className="object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                </div>
+
+                {/* Stats mini-grid */}
+                <div className="grid grid-cols-3 gap-2 py-3 px-2 rounded-xl bg-white/80 border border-neutral-100">
+                  {[
+                    { value: "15+", label: "Active Users" },
+                    { value: "99.9%", label: "Uptime" },
+                    { value: "3 Apps", label: "Platforms" },
+                  ].map(s => (
+                    <div key={s.label} className="text-center">
+                      <div className="text-sm font-bold text-neutral-900">{s.value}</div>
+                      <div className="text-[10px] text-neutral-500 mt-0.5">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Platform chips */}
+                <div className="flex m-auto items-center gap-4 px-1">
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500"><SiApple className="size-3.5" /><span>iOS</span></div>
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500"><span>🤖</span><span>Android</span></div>
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500"><span>🌐</span><span>Web</span></div>
+                </div>
+              </div>
+
+              {/* Info */}
+              <div className="flex flex-col justify-between p-8 lg:p-10">
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />Live
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-200">Sole Developer</span>
+                    <span className="text-xs text-neutral-400 font-medium">SaaS · Commercial</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-neutral-900 mb-2">Mimonous</h3>
+                    <p className="text-neutral-600 leading-relaxed">
+                      An invoicing and business management SaaS for small teams and freelancers. Built the full platform — multi-currency invoicing, client portal, and payment tracking — from scratch to production.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {["Laravel", "React Native", "Laravel Reverb", "PostgreSQL", "Redis", "DigitalOcean"].map(tag => (
+                      <span key={tag} className="px-2.5 py-1 rounded-md text-xs font-medium bg-white/80 border border-neutral-200 text-neutral-600">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <Link href="https://mimonous.com" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 hover:text-sky-600 transition-colors">
+                  Visit Mimonous <FiArrowUpRight className="size-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Zeitproof */}
+          <div className="group relative rounded-3xl overflow-hidden border border-neutral-200 bg-gradient-to-br from-slate-50/80 via-white to-blue-50/40 shadow-sm hover:shadow-xl transition-all duration-500">
+            <div className="grid md:grid-cols-[1fr_1.1fr] gap-0">
+              {/* Info */}
+              <div className="flex flex-col justify-between p-8 lg:p-10">
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />In Development
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-200">Sole Developer</span>
+                    <span className="text-xs text-neutral-400 font-medium">SaaS · German Market</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-neutral-900 mb-2">Zeitproof</h3>
+                    <p className="text-neutral-600 leading-relaxed">
+                      A compliance SaaS protecting German workers in labour disputes. Generates tamper-proof, court-admissible digital work records — so when clients deny hours worked, employees have ironclad legal proof under ArbZG.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {["React", "Django", "PDF Generation", "Digital Signatures", "ArbZG"].map(tag => (
+                      <span key={tag} className="px-2.5 py-1 rounded-md text-xs font-medium bg-white/80 border border-neutral-200 text-neutral-600">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-neutral-400 cursor-default select-none">Not publicly available</span>
+              </div>
+
+              {/* Browser Mockup + metrics below */}
+              <div className="relative p-4 md:p-6 flex flex-col gap-3">
+                <div className="rounded-xl overflow-hidden shadow-2xl ring-1 ring-black/10">
+                  <div className="flex items-center gap-2 px-3 py-2.5 bg-[#1a1b23] border-b border-white/5">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                      <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                    </div>
+                    <div className="flex-1 mx-3">
+                      <div className="bg-[#2d2e3b] rounded-md px-3 py-1 text-xs text-neutral-500 font-mono">app.zeitproof.com</div>
+                    </div>
+                  </div>
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[#0d1117]">
+                    <Image src="/zeitproof.png" alt="Zeitproof — Work verification system" fill className="object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                </div>
+
+                {/* Stats mini-grid */}
+                <div className="grid grid-cols-3 gap-2 py-3 px-2 rounded-xl bg-white/80 border border-neutral-100">
+                  {[
+                    { value: "ArbZG", label: "Compliant" },
+                    { value: "< 2s", label: "PDF Export" },
+                    { value: "0%", label: "Dispute Rate" },
+                  ].map(s => (
+                    <div key={s.label} className="text-center">
+                      <div className="text-sm font-bold text-neutral-900">{s.value}</div>
+                      <div className="text-[10px] text-neutral-500 mt-0.5">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Platform chips */}
+                <div className="flex m-auto items-center gap-4 px-1">
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500"><SiApple className="size-3.5" /><span>iOS</span></div>
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500"><span>🤖</span><span>Android</span></div>
+                  <div className="flex items-center gap-1.5 text-xs text-neutral-500"><span>🌐</span><span>Web</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Other Projects Section */}
+      <section className="flex flex-col gap-8 pt-10">
+        <div className="flex flex-col gap-4">
+          <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-4xl">
+            Other Projects
           </h2>
           <p className="text-lg text-neutral-500">
             Here are some of the projects I&apos;ve worked on.
@@ -286,7 +416,7 @@ export default async function Home() {
               href="https://youvendo.de/"
               role="Software Developer"
               company="Youvendo GmbH"
-              period="May, 2025 — Present"
+              period="May, 2025 — March, 2026"
             />
             <ExperienceItem
               href="https://exeebit.com/"
@@ -371,9 +501,19 @@ export default async function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {posts.map((post: BlogPost) => (
-            <BlogCard key={post.id} post={post} />
+          {posts.map((post: BlogPostData) => (
+            <BlogCard key={post.slug} post={post} />
           ))}
+        </div>
+
+        <div className="mt-6 mb-6 flex justify-center">
+          <Link 
+            href="/blog" 
+            className="group relative inline-flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-300 rounded-full bg-white/50 hover:bg-white border border-neutral-200 shadow-sm hover:shadow-md text-neutral-600 hover:text-neutral-900"
+          >
+            <span>View all articles</span>
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         </div>
       </section>
 
@@ -481,42 +621,41 @@ function ProjectCard({ href, src, alt, title, meta }: {
   )
 }
 
-function BlogCard({ post }: { post: BlogPost }) {
+function BlogCard({ post }: { post: BlogPostData }) {
   const date = new Date(post.date).toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
 
-  const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
-
   return (
-    <Link href={post.link} target="_blank" rel="noopener noreferrer"
+    <Link href={`/blog/${post.slug}`}
       className="group flex flex-col bg-white rounded-2xl border border-neutral-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-neutral-200 h-full">
-      {featuredMedia && (
+      {post.featuredImage && (
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100 border-b border-neutral-100">
           <Image
-            src={featuredMedia}
-            alt={post.title.rendered}
+            src={post.featuredImage}
+            alt={post.title}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>
       )}
-
       <div className="flex flex-col p-5 gap-3 grow">
         <div className="text-xs font-medium text-neutral-500">{date}</div>
 
         <h3
           className="text-lg font-semibold text-neutral-900 group-hover:text-sky-600 transition-colors line-clamp-2"
-          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-        />
+        >
+          {post.title}
+        </h3>
 
-        <div
+        <p
           className="text-sm text-neutral-600 line-clamp-3 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-        />
+        >
+          {post.excerpt}
+        </p>
 
         <div className="mt-auto pt-3 flex items-center text-sm font-medium text-sky-600 group-hover:translate-x-1 transition-transform">
           Read more <FiArrowUpRight className="ml-1" />

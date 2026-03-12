@@ -44,7 +44,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  keywords: ['s4gor', 'Software Developer', 'Web Development', 'React', 'Next.js', 'Emran Hossain Sagor', 'Portfolio'],
+  keywords: ['Emran Hossain Sagor', 'Exeebit', 'Mimonous', 'phpinfo WP', 's4gor', 'Software Developer', 'Web Development', 'React', 'Next.js', 'Portfolio'],
   authors: [{ name: 'Emran Hossain Sagor', url: 'https://s4gor.exeebit.com' }],
   creator: 'Emran Hossain Sagor',
   appleWebApp: {

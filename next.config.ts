@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'jstales.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'old.jstales.com',
+      },
     ],
   },
 };

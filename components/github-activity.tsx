@@ -31,9 +31,9 @@ export default function GitHubActivity() {
   const [error, setError] = useState<string | null>(null);
 
   const milestones = [
+    { date: 'March, 2026', title: 'Left Youvendo GmbH', type: 'end' },
     { date: 'November, 2025', title: 'Launched Mimonous: A peer-to-peer invoicing software', type: 'start' },
     { date: 'May, 2025', title: 'Joined Youvendo GmbH', type: 'start' },
-    { date: 'June, 2025', title: 'Left Mars Production', type: 'end' },
   ];
 
   useEffect(() => {

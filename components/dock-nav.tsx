@@ -84,19 +84,19 @@ export default function DockNav() {
         onTouchCancel={() => mouseX.set(Infinity)}
         className="mx-auto flex h-14 sm:h-16 items-end gap-2 sm:gap-4 rounded-2xl border border-neutral-100 bg-white px-2 sm:px-4 pb-2 sm:pb-3 shadow-xl pointer-events-auto"
       >
-        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#home" label="Home" isActive={currentHash === "#home"} onClick={() => handleLinkClick("#home")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="/#home" label="Home" isActive={currentHash === "#home"} onClick={() => handleLinkClick("#home")}>
           <Home className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#oss" label="Open Source" isActive={currentHash === "#oss"} onClick={() => handleLinkClick("#oss")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="/#oss" label="Open Source" isActive={currentHash === "#oss"} onClick={() => handleLinkClick("#oss")}>
           <Terminal className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#projects" label="Projects" isActive={currentHash === "#projects"} onClick={() => handleLinkClick("#projects")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="/#projects" label="Projects" isActive={currentHash === "#projects"} onClick={() => handleLinkClick("#projects")}>
           <FolderOpen className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#about" label="About" isActive={currentHash === "#about"} onClick={() => handleLinkClick("#about")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="/#about" label="About" isActive={currentHash === "#about"} onClick={() => handleLinkClick("#about")}>
           <User className="size-5" />
         </DockIcon>
-        <DockIcon mouseX={mouseX} isTouch={isTouch} href="#blog" label="Blog" isActive={currentHash === "#blog"} onClick={() => handleLinkClick("#blog")}>
+        <DockIcon mouseX={mouseX} isTouch={isTouch} href="/#blog" label="Blog" isActive={currentHash === "#blog"} onClick={() => handleLinkClick("#blog")}>
           <BookOpen className="size-5" />
         </DockIcon>
 
