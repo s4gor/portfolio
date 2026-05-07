@@ -48,11 +48,7 @@ export default async function Home() {
       'https://twitter.com/emr4ns4gor/',
       'https://stackoverflow.com/users/13526420/emran-hossain-sagor/'
     ],
-    jobTitle: 'Software Developer',
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Youvendo'
-    }
+    jobTitle: 'Software Developer'
   }
 
   return (
@@ -77,17 +73,8 @@ export default async function Home() {
         <div className="prose prose-neutral max-w-none">
           <p className="text-xl text-neutral-600 leading-relaxed max-w-2xl">
             Hello! 👋 I&apos;m a passionate developer building software.
-            Currently, I&apos;m crafting great experiences at{' '}
-            <Link href="https://youvendo.de/" target="_blank" rel="noopener noreferrer" className='inline-flex items-center gap-1 font-medium text-neutral-900 hover:text-sky-600 transition-colors'>
-              Youvendo
-              <Image
-                src="/images/youvendo.png"
-                alt='Youvendo logo'
-                className='w-5 h-5 rounded-full object-cover border border-neutral-200'
-                width='20'
-                height='20'
-              />
-            </Link>
+            Currently, I&apos;m working as a freelance developer, building independent projects, and{' '}
+            <span className='font-medium text-neutral-900'>exploring new opportunities</span>.
           </p>
         </div>
 
@@ -507,8 +494,8 @@ export default async function Home() {
         </div>
 
         <div className="mt-6 mb-6 flex justify-center">
-          <Link 
-            href="/blog" 
+          <Link
+            href="/blog"
             className="group relative inline-flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-300 rounded-full bg-white/50 hover:bg-white border border-neutral-200 shadow-sm hover:shadow-md text-neutral-600 hover:text-neutral-900"
           >
             <span>View all articles</span>
